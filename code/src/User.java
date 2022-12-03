@@ -1,4 +1,4 @@
-public class User {
+public class User implements Notifications{
     private String Name;
     private String Email;
     private String Password;
@@ -26,6 +26,11 @@ public class User {
     }
 
     public void refund(){
+
+    }
+
+    @Override
+    public void update(String s) {
 
     }
 }

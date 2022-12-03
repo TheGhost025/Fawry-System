@@ -1,4 +1,4 @@
-public class Admin {
+public class Admin implements Notifiers{
     String Name;
     String Email;
 
@@ -15,6 +15,21 @@ public class Admin {
     }
 
     void addDiscount(){
+
+    }
+
+    @Override
+    public void registerObserver() {
+
+    }
+
+    @Override
+    public void removeObserver() {
+
+    }
+
+    @Override
+    public void notifyObserver() {
 
     }
 }
