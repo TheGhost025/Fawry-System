@@ -1,13 +1,13 @@
 public class Vodafone implements ServiceProvider {
 
     @Override
-    public void createRecharge() {
-
+    public Service createRecharge() {
+        return new VodafoneRecharge();
     }
 
     @Override
-    public void createInternet() {
-
+    public Service createInternet() {
+        return new VodafoneInternet();
     }
 
 }

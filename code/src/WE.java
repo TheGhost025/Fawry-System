@@ -1,13 +1,13 @@
 public class WE implements ServiceProvider {
 
     @Override
-    public void createRecharge() {
-
+    public Service createRecharge() {
+        return new WERecharge();
     }
 
     @Override
-    public void createInternet() {
-
+    public Service createInternet() {
+        return new WEInternet();
     }
 
 }

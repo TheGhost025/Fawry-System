@@ -31,6 +31,6 @@ public class User implements Notifications{
 
     @Override
     public void update(String s) {
-
+        System.out.println("New Update "+s);
     }
 }

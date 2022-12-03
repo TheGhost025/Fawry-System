@@ -1,4 +1,4 @@
-public class DonationService implements Service{
+public abstract class DonationService implements Service{
 
     @Override
     public boolean checkDiscount() {
@@ -6,9 +6,5 @@ public class DonationService implements Service{
         return false;
     }
 
-    @Override
-    public void serve() {
-        // TODO Auto-generated method stub
-    }
     
 }

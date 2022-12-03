@@ -1,4 +1,4 @@
 public interface ServiceProvider {
-    public void createRecharge();
-    public void createInternet();
+    public Service createRecharge();
+    public Service createInternet();
 }
