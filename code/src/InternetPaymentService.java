@@ -1,8 +1,18 @@
-public interface InternetPaymentService extends Service {
+public abstract class InternetPaymentService implements Service {
 
-    public default boolean checkDiscount() {
-        return true;
+    Discount discount=null;
+    public void SetDiscount(Discount d){
+        discount=d;
+        discount.discount();
     }
-    
-    public void serve();
+    public boolean checkDiscount() {
+        if(discount==null) {
+            System.out.println("Not Found");
+            return false;
+        }
+        else{
+            System.out.println("Found");
+            return true;
+        }
+    }
 }

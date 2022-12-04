@@ -1,6 +1,13 @@
-public interface MobileRechargeService extends Service {
-    public default boolean checkDiscount() {
-        return true;
+public abstract class MobileRechargeService implements Service {
+   Discount discount=null;
+    public void SetDiscount(Discount d){
+        discount=d;
+        discount.discount();
     }
-    public void serve();
+    public boolean checkDiscount() {
+        if(discount==null)
+            return false;
+        else
+            return true;
+    }
 }

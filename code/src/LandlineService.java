@@ -1,6 +1,13 @@
 public abstract class LandlineService implements Service {
-    @Override
+    Discount discount=null;
+    public void SetDiscount(Discount d){
+        discount=d;
+        discount.discount();
+    }
     public boolean checkDiscount() {
-        return false;
+        if(discount==null)
+            return false;
+        else
+            return true;
     }
 }

@@ -1,4 +1,5 @@
 public interface Service {
     boolean checkDiscount();
-    void serve();
+    public void SetDiscount(Discount d);
+    public int serve();
 }

@@ -1,10 +1,17 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Transactions {
-    Transaction items[];
+    List<Transaction> item=new ArrayList<>();
 
     void addTransaction(Transaction transaction) {
-        
+        item.add(transaction);
     }
     void removeTransaction(Transaction transaction) {
+        item.remove(transaction);
+    }
 
+    List<Transaction> GetTransaction(){
+        return item;
     }
 }

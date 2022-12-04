@@ -1,8 +1,14 @@
+import java.util.Scanner;
+
 public class QuarterReceipt extends LandlineService {
 
     @Override
-    public void serve() {
-        System.out.println("Quarter Receipt Landline Service Compelte");
+    public int serve() {
+        Scanner myObj=new Scanner(System.in);
+        System.out.println("Pay Landline Quarter");
+        int amount =myObj.nextInt();
+        System.out.println("Monthly Receipt Landline Service Compelte");
+        return amount;
     }
 
 }
