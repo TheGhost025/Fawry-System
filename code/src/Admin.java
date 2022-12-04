@@ -13,7 +13,11 @@ public class Admin implements Notifiers{
     Refund refunds=new Refund();
 
 
-    void setRefund(Refund r){
+    public Admin(String n,String e){
+        Name=n;
+        Email=e;
+    }
+    public  void setRefund(Refund r){
         refunds=r;
     }
 
