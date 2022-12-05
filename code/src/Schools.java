@@ -6,7 +6,7 @@ public class Schools extends DonationService {
         Scanner myObj = new Scanner(System.in);
         System.out.println("choose between Schools Zeweilcity");
         String sr =myObj.nextLine();
-        if(sr=="Zeweilcity"){
+        if(sr.equals("Zeweilcity")){
             System.out.println("Pay Donation for Resala");
             int amount=myObj.nextInt();
             System.out.println("Donation compelete for Zeweil City");

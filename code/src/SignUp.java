@@ -9,9 +9,12 @@ public class SignUp implements Aurthorize{
 
     public boolean signUp(){
         Scanner myObj = new Scanner(System.in);
-        String n = myObj.nextLine();
-        String e = myObj.nextLine();
-        String p = myObj.nextLine();
+        System.out.println("Enter Your Name: ");
+        String n = myObj.next();
+        System.out.println("Enter Your Email: ");
+        String e = myObj.next();
+        System.out.println("Enter Your Password: ");
+        String p = myObj.next();
         u.Set(n,e,p);
         return true;
     }
