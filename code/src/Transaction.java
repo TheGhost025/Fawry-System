@@ -1,6 +1,7 @@
 public class Transaction {
     String serviceProvider;
     String transactionType;
+    boolean state;
     int amount;
     public void SetTransaction(String s,String r,int a){
         serviceProvider=s;
@@ -15,5 +16,11 @@ public class Transaction {
     }
     public int getAmount(){
         return amount;
+    }
+    public void Setstate(boolean s){
+        state=s;
+    }
+    public boolean Getstate(){
+        return state;
     }
 }

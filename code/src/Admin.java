@@ -17,6 +17,28 @@ public class Admin implements Notifiers{
         Name=n;
         Email=e;
     }
+
+    public Admin(){
+        Name=null;
+        Email=null;
+    }
+
+    public void setName(String name){
+        Name=name;
+    }
+
+    public void setEmail(String email){
+        Email=email;
+    }
+
+    public String getName(){
+        return Name;
+    }
+
+    public String getEmail(){
+        return Email;
+    }
+
     public  void setRefund(Refund r){
         refunds=r;
     }
@@ -29,8 +51,8 @@ public class Admin implements Notifiers{
             System.out.println("to reject press 0 to accept press 1");
             Scanner Myobj=new Scanner(System.in);
             boolean choose=Myobj.nextBoolean();
-            refunds.Setstate(choose);
-            if(refunds.Getstate()){
+            t.Setstate(choose);
+            if(t.Getstate()){
                 refunds.ReturnMoney(t.getAmount());
 
             }
