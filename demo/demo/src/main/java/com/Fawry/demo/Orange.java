@@ -1,5 +1,6 @@
 package com.Fawry.demo;
 
+@org.springframework.stereotype.Service
 public class Orange implements ServiceProvider {
 
     @Override

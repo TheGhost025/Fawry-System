@@ -1,9 +1,15 @@
 package com.Fawry.demo;
 
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+@RestController
 public class User implements Notifications{
     private String Name;
     private String Email;
@@ -14,7 +20,15 @@ public class User implements Notifications{
     Transactions trans=new Transactions();
     Aurthorize aur;
     Refund refund=new Refund();
-    void Set(String n ,String e,String p){
+
+    void Set(String n ,String e, String p){
+        Name =n;
+        Email=e;
+        Password=p;
+
+    }
+
+    void Get(String n ,String e,String p){
         Name =n;
         Email=e;
         Password=p;
@@ -50,143 +64,137 @@ public class User implements Notifications{
             }
         }
     }
-    public void searchService(String Service){
+
+    @GetMapping(value = "/searchService/{s}")
+    public String searchService(@PathVariable("s") String Service){
         if(Service.equals("recharge")){
-            System.out.println("Found");
-            chooseService(Service);
+            return "Found";
         }
         else if(Service.equals("internet")){
-            System.out.println("Found");
-            chooseService(Service);
+            return "Found";
         }
         else if(Service.equals("landline")){
-            System.out.println("Found");
-            chooseService(Service);
+            return "Found";
         }
         else if(Service.equals("donation")){
-            System.out.println("Found");
-            chooseService(Service);
+            return "Found";
         }
         else{
-            System.out.println("NOT Found");
+            return "Not Found";
         }
     }
 
-    public void refund(){
+    @GetMapping(value="/getTransactions")
+    public List<Transaction> transactions(){
+        return trans.GetTransaction();
+    }
+
+    @GetMapping(value="/refund/{id}")
+    public String refund(@PathVariable("id") int id){
         List<Transaction> item=new ArrayList<Transaction>();
         Scanner myObj=new Scanner(System.in);
         item=trans.GetTransaction();
-        for(Transaction t:item){
-            t.GetTransaction();
-            System.out.println("Do you refund it yes press 0");
-            int x=myObj.nextInt();
-            if(x==0){
-                refund.SetTrans(t);
-            }
-        }
+        Transaction t=new Transaction();
+        t= item.get(id);
+        refund.SetTrans(t);
+        return "Complete Successfully";
     }
 
-    public void chooseService(String s){
+    @GetMapping(value = "/chooseService/{s}/{p}/{pay}/{ser}/{am}/{pl}")
+    public Transaction chooseService(@PathVariable("s") String s,@PathVariable("p") String p,@PathVariable("pay") String pay,@PathVariable("ser") String ser,@PathVariable("am") int amount,@PathVariable("pl") String place){
         if(s.equals("recharge")){
-            System.out.println("choose providers We Vodafone Etisalat Orange");
-            Scanner Myobj=new Scanner(System.in);
-            String ser=Myobj.next();
-            if(ser.equals("We")){
+            if(p.equals("We")){
                 service=new WERecharge();
-                int x=service.serve();
-                System.out.println("Pay with CreidtCard Wallet");
-                String pay=Myobj.next();
+                int x=service.serve(amount,place);
                 if(pay.equals("CreidtCard")){
                     paymentMethod=new CreditCard();
                     paymentMethod.pay();
                     Transaction t =new Transaction();
-                    t.SetTransaction(ser,s,x);
+                    t.SetTransaction(p,s,x);
                     trans.addTransaction(t);
+                    return t;
                 }
                 else if(pay.equals("Wallet")){
                     paymentMethod=new Wallet();
                     paymentMethod.pay();
                     Transaction t =new Transaction();
-                    t.SetTransaction(ser,s,x);
+                    t.SetTransaction(p,s,x);
                     trans.addTransaction(t);
+                    return t;
                 }
             }
-            else if(ser.equals("Vodafone")){
+            else if(p.equals("Vodafone")){
                 service=new VodafoneRecharge();
-                int x=service.serve();
-                System.out.println("Pay with CreidtCard Wallet");
-                String pay=Myobj.next();
+                int x=service.serve(amount,place);
                 if(pay.equals("CreidtCard")){
                     paymentMethod=new CreditCard();
                     paymentMethod.pay();
                     Transaction t =new Transaction();
-                    t.SetTransaction(ser,s,x);
+                    t.SetTransaction(p,s,x);
                     trans.addTransaction(t);
+                    return t;
                 }
                 else if(pay.equals("Wallet")){
                     paymentMethod=new Wallet();
                     paymentMethod.pay();
                     Transaction t =new Transaction();
-                    t.SetTransaction(ser,s,x);
+                    t.SetTransaction(p,s,x);
                     trans.addTransaction(t);
+                    return t;
                 }
             }
-            else if(ser.equals("Etisalat")){
+            else if(p.equals("Etisalat")){
                 service=new EtisalatRecharge();
-                int x=service.serve();
-                System.out.println("Pay with CreidtCard Wallet");
-                String pay=Myobj.next();
+                int x=service.serve(amount,place);
                 if(pay.equals("CreidtCard")){
                     paymentMethod=new CreditCard();
                     paymentMethod.pay();
                     Transaction t =new Transaction();
-                    t.SetTransaction(ser,s,x);
+                    t.SetTransaction(p,s,x);
                     trans.addTransaction(t);
+                    return t;
                 }
                 else if(pay.equals("Wallet")){
                     paymentMethod=new Wallet();
                     paymentMethod.pay();
                     Transaction t =new Transaction();
-                    t.SetTransaction(ser,s,x);
+                    t.SetTransaction(p,s,x);
                     trans.addTransaction(t);
+                    return t;
                 }
             }
-            else if(ser.equals("Orange")){
+            else if(p.equals("Orange")){
                 service=new OrangeRecharge();
-                int x=service.serve();
-                System.out.println("Pay with CreidtCard Wallet");
-                String pay=Myobj.next();
+                int x=service.serve(amount,place);
                 if(pay.equals("CreidtCard")){
                     paymentMethod=new CreditCard();
                     paymentMethod.pay();
                     Transaction t =new Transaction();
-                    t.SetTransaction(ser,s,x);
+                    t.SetTransaction(p,s,x);
                     trans.addTransaction(t);
+                    return t;
                 }
                 else if(pay.equals("Wallet")){
                     paymentMethod=new Wallet();
                     paymentMethod.pay();
                     Transaction t =new Transaction();
-                    t.SetTransaction(ser,s,x);
+                    t.SetTransaction(p,s,x);
                     trans.addTransaction(t);
+                    return t;
                 }
             }
         }
         else if(s.equals("internet")){
-            System.out.println("choose providers We Vodafone Etisalat Orange");
-            Scanner Myobj=new Scanner(System.in);
-            String ser=Myobj.next();
-            if(ser.equals("We")){
+            if(p.equals("We")){
                 service=new WEInternet();
-                int x=service.serve();
-                System.out.println("Pay with CreidtCard Wallet");
-                String pay=Myobj.nextLine();
+                int x=service.serve(amount,place);
                 if(pay.equals("CreidtCard")){
                     paymentMethod=new CreditCard();
                     paymentMethod.pay();
                     Transaction t =new Transaction();
-                    t.SetTransaction(ser,s,x);
+                    t.SetTransaction(p,s,x);
                     trans.addTransaction(t);
+                    return t;
                 }
                 else if(pay.equals("Wallet")){
                     paymentMethod=new Wallet();
@@ -194,18 +202,17 @@ public class User implements Notifications{
                     Transaction t =new Transaction();
                     t.SetTransaction(ser,s,x);
                     trans.addTransaction(t);
+                    return t;
                 }
             }
-            else if(ser.equals("Vodafone")){
+            else if(p.equals("Vodafone")){
                 service=new VodafoneInternet();
-                int x=service.serve();
-                System.out.println("Pay with CreidtCard Wallet");
-                String pay=Myobj.next();
+                int x=service.serve(amount,place);
                 if(pay.equals("CreidtCard")){
                     paymentMethod=new CreditCard();
                     paymentMethod.pay();
                     Transaction t =new Transaction();
-                    t.SetTransaction(ser,s,x);
+                    t.SetTransaction(p,s,x);
                     trans.addTransaction(t);
                 }
                 else if(pay.equals("Wallet")){
@@ -214,64 +221,61 @@ public class User implements Notifications{
                     Transaction t =new Transaction();
                     t.SetTransaction(ser,s,x);
                     trans.addTransaction(t);
+                    return t;
                 }
             }
-            else if(ser.equals("Etisalat")){
+            else if(p.equals("Etisalat")){
                 service=new EtisalatInternet();
-                int x=service.serve();
-                System.out.println("Pay with CreidtCard Wallet");
-                String pay=Myobj.next();
+                int x=service.serve(amount,place);
                 if(pay.equals("CreidtCard")){
                     paymentMethod=new CreditCard();
                     paymentMethod.pay();
                     Transaction t =new Transaction();
-                    t.SetTransaction(ser,s,x);
+                    t.SetTransaction(p,s,x);
                     trans.addTransaction(t);
+                    return t;
                 }
                 else if(pay.equals("Wallet")){
                     paymentMethod=new Wallet();
                     paymentMethod.pay();
                     Transaction t =new Transaction();
-                    t.SetTransaction(ser,s,x);
+                    t.SetTransaction(p,s,x);
                     trans.addTransaction(t);
+                    return t;
                 }
             }
-            else if(ser.equals("Orange")){
+            else if(p.equals("Orange")){
                 service=new OrangeInternet();
-                int x=service.serve();
-                System.out.println("Pay with CreidtCard Wallet");
-                String pay=Myobj.next();
+                int x=service.serve(amount,place);
                 if(pay.equals("CreidtCard")){
                     paymentMethod=new CreditCard();
                     paymentMethod.pay();
                     Transaction t =new Transaction();
                     t.SetTransaction(ser,s,x);
                     trans.addTransaction(t);
+                    return t;
                 }
                 else if(pay.equals("Wallet")){
                     paymentMethod=new Wallet();
                     paymentMethod.pay();
                     Transaction t =new Transaction();
-                    t.SetTransaction(ser,s,x);
+                    t.SetTransaction(p,s,x);
                     trans.addTransaction(t);
+                    return t;
                 }
             }
         }
         else if(s.equals("landline")){
-            System.out.println("choose beetween Monthly Quarter");
-            Scanner Myobj=new Scanner(System.in);
-            String ser=Myobj.next();
             if(ser.equals("Monthly")){
                 service=new MonthlyReceipt();
-                int x=service.serve();
-                System.out.println("Pay with CreidtCard Wallet");
-                String pay=Myobj.nextLine();
+                int x=service.serve(amount,place);
                 if(pay.equals("CreidtCard")){
                     paymentMethod=new CreditCard();
                     paymentMethod.pay();
                     Transaction t =new Transaction();
                     t.SetTransaction(ser,s,x);
                     trans.addTransaction(t);
+                    return t;
                 }
                 else if(pay.equals("Wallet")){
                     paymentMethod=new Wallet();
@@ -279,19 +283,19 @@ public class User implements Notifications{
                     Transaction t =new Transaction();
                     t.SetTransaction(ser,s,x);
                     trans.addTransaction(t);
+                    return t;
                 }
             }
             else if(ser.equals("Quarter")){
                 service=new QuarterReceipt();
-                int x=service.serve();
-                System.out.println("Pay with CreidtCard Wallet");
-                String pay=Myobj.next();
+                int x=service.serve(amount,place);
                 if(pay.equals("CreidtCard")){
                     paymentMethod=new CreditCard();
                     paymentMethod.pay();
                     Transaction t =new Transaction();
                     t.SetTransaction(ser,s,x);
                     trans.addTransaction(t);
+                    return t;
                 }
                 else if(pay.equals("Wallet")){
                     paymentMethod=new Wallet();
@@ -299,24 +303,21 @@ public class User implements Notifications{
                     Transaction t =new Transaction();
                     t.SetTransaction(ser,s,x);
                     trans.addTransaction(t);
+                    return t;
                 }
             }
         }
         else if(s.equals("donation")){
-            System.out.println("choose beetween Hospital NGOS School");
-            Scanner Myobj=new Scanner(System.in);
-            String ser=Myobj.next();
             if(ser.equals("Hospital")){
                 service=new MonthlyReceipt();
-                int x=service.serve();
-                System.out.println("Pay with CreidtCard Wallet");
-                String pay=Myobj.next();
+                int x=service.serve(amount,place);
                 if(pay.equals("CreidtCard")){
                     paymentMethod=new CreditCard();
                     paymentMethod.pay();
                     Transaction t =new Transaction();
                     t.SetTransaction(ser,s,x);
                     trans.addTransaction(t);
+                    return t;
                 }
                 else if(pay.equals("Wallet")){
                     paymentMethod=new Wallet();
@@ -324,19 +325,19 @@ public class User implements Notifications{
                     Transaction t =new Transaction();
                     t.SetTransaction(ser,s,x);
                     trans.addTransaction(t);
+                    return t;
                 }
             }
             else if(ser.equals("NGOS")){
                 service=new QuarterReceipt();
-                int x=service.serve();
-                System.out.println("Pay with CreidtCard Wallet");
-                String pay=Myobj.next();
+                int x=service.serve(amount,place);
                 if(pay.equals("CreidtCard")){
                     paymentMethod=new CreditCard();
                     paymentMethod.pay();
                     Transaction t =new Transaction();
                     t.SetTransaction(ser,s,x);
                     trans.addTransaction(t);
+                    return t;
                 }
                 else if(pay.equals("Wallet")){
                     paymentMethod=new Wallet();
@@ -344,19 +345,19 @@ public class User implements Notifications{
                     Transaction t =new Transaction();
                     t.SetTransaction(ser,s,x);
                     trans.addTransaction(t);
+                    return t;
                 }
             }
             else if(ser.equals("School")){
                 service=new QuarterReceipt();
-                int x=service.serve();
-                System.out.println("Pay with CreidtCard Wallet");
-                String pay=Myobj.next();
+                int x=service.serve(amount,place);
                 if(pay.equals("CreidtCard")){
                     paymentMethod=new CreditCard();
                     paymentMethod.pay();
                     Transaction t =new Transaction();
                     t.SetTransaction(ser,s,x);
                     trans.addTransaction(t);
+                    return t;
                 }
                 else if(pay.equals("Wallet")){
                     paymentMethod=new Wallet();
@@ -364,13 +365,15 @@ public class User implements Notifications{
                     Transaction t =new Transaction();
                     t.SetTransaction(ser,s,x);
                     trans.addTransaction(t);
+                    return t;
                 }
             }
         }
+        return null;
     }
 
     @Override
-    public void update(String s) {
-        System.out.println("New Update "+s);
+    public String update(String s) {
+        return "New Update "+s;
     }
 }

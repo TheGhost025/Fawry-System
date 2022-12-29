@@ -1,9 +1,12 @@
 package com.Fawry.demo;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class Wallet implements PaymentMethod{
 
     @Override
-    public void pay() {
-        System.out.println("Pay with Wallet");
+    public String pay() {
+        return "Pay with Wallet";
     }
 }

@@ -1,21 +1,17 @@
 package com.Fawry.demo;
 
+import org.springframework.stereotype.Service;
+
 import java.util.Scanner;
 
+@Service
 public class Schools extends DonationService {
     @Override
-    public int serve() {
-        Scanner myObj = new Scanner(System.in);
-        System.out.println("choose between Schools Zeweilcity");
-        String sr =myObj.nextLine();
+    public int serve(int amount,String sr) {
         if(sr.equals("Zeweilcity")){
-            System.out.println("Pay Donation for Resala");
-            int amount=myObj.nextInt();
-            System.out.println("Donation compelete for Zeweil City");
             return amount;
         }
         else{
-            System.out.println("Not Found");
             return -1;
         }
     }

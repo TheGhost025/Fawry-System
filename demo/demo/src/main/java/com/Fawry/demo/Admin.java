@@ -1,10 +1,13 @@
 package com.Fawry.demo;
 
+import org.springframework.web.bind.annotation.*;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
+@RestController
 public class Admin implements Notifiers{
     String Name;
     String Email;
@@ -45,186 +48,188 @@ public class Admin implements Notifiers{
         refunds=r;
     }
 
-    public void StateRefund(){
-        List<Transaction> transactions=refunds.GetTransaction();
-        for(Transaction t :transactions){
-            t.GetTransaction();
-            int x=transactions.indexOf(t);
-            System.out.println("to reject press 0 to accept press 1");
-            Scanner Myobj=new Scanner(System.in);
-            boolean choose=Myobj.nextBoolean();
-            t.Setstate(choose);
-            if(t.Getstate()){
-                refunds.ReturnMoney(t.getAmount());
-
-            }
-        }
+    @GetMapping(value = "/getRefundTransaction")
+    public List<Transaction> transactions(){
+        return refunds.GetTransaction();
     }
 
+    @GetMapping(value="/stateRefund/{id}/{state}")
+    public String StateRefund(int id,boolean state){
+        List<Transaction> transactions=refunds.GetTransaction();
+        Transaction t =new Transaction();
+        t=transactions.get(id);
+        t.Setstate(state);
+        if(t.Getstate()){
+            refunds.ReturnMoney(t.getAmount());
+            return "Accept Refund";
+    }
+        return "Reject Refund";
+    }
 
-    void addDiscount(){
-        System.out.println("While Service What you Want to Discount it Internet Recharge Landline Donation");
-        Scanner Myobj=new Scanner(System.in);
-        String choose=Myobj.next();
-        if(choose.equals("Internet")){
-            System.out.println("What Type Discount you need Overall Specific");
-            choose=Myobj.next();
-            if(choose.equals("Overall")){
-                s=new InternetPaymentService() {
+    @GetMapping(value = "/addDiscount/{ser}/{k}/{pro}/{k1}/{am}")
+    public String addDiscount(@PathVariable("ser") String ser,@PathVariable("k") String k,@PathVariable("pro") String pro,@PathVariable("k1") String k1,@PathVariable("am") int am){
+        if(ser.equals("Internet")){
+            if(k.equals("Overall")){
+                s = new InternetPaymentService() {
                     @Override
-                    public int serve() {
+                    public int serve(int amount,String place) {
                         return 1;
                     }
                 };
-
-                s.SetDiscount(new OverallDiscount());
-                notifyObserver(choose+" Discount for Internet");
+                s.SetDiscount(new OverallDiscount(),am);
+                notifyObserver(k+" Discount for Internet");
+                return "Add Discount Successfully";
             }
-            else if(choose.equals("Specific")){
-                System.out.println("What Provider you need We Vodafone Etisalat Orange");
-                choose=Myobj.next();
-                if(choose.equals("We")){
+            else if(k.equals("Specific")){
+                if(pro.equals("We")){
                     sp=new WE();
                     s= sp.createInternet();
-                    s.SetDiscount(new SpecificDiscount());
-                    notifyObserver(choose+" Discount for We Internet");
+                    s.SetDiscount(new SpecificDiscount(),am);
+                    notifyObserver(k+" Discount for We Internet");
+                    return "Add Discount Successfully";
                 }
-                if(choose.equals("Vodafone")){
+                if(pro.equals("Vodafone")){
                     sp=new Vodafone();
                     s= sp.createInternet();
-                    s.SetDiscount(new SpecificDiscount());
-                    notifyObserver(choose+" Discount for Vodafone Internet");
+                    s.SetDiscount(new SpecificDiscount(),am);
+                    notifyObserver(k+" Discount for Vodafone Internet");
+                    return "Add Discount Successfully";
                 }
-                if(choose.equals("Etisalat")){
+                if(pro.equals("Etisalat")){
                     sp=new Etisalat();
                     s= sp.createInternet();
-                    s.SetDiscount(new SpecificDiscount());
-                    notifyObserver(choose+" Discount for Etisalat Internet");
+                    s.SetDiscount(new SpecificDiscount(),am);
+                    notifyObserver(k+" Discount for Etisalat Internet");
+                    return "Add Discount Successfully";
                 }
-                if(choose.equals("Orange")){
+                if(pro.equals("Orange")){
                     sp=new Orange();
                     s= sp.createInternet();
-                    s.SetDiscount(new SpecificDiscount());
-                    notifyObserver(choose+" Discount for Orange Internet");
+                    s.SetDiscount(new SpecificDiscount(),am);
+                    notifyObserver(k+" Discount for Orange Internet");
+                    return "Add Discount Successfully";
                 }
             }
         }
-        else if(choose.equals("Recharge")){
-            System.out.println("What Type Discount you need Overall Specific");
-            choose=Myobj.next();
-            if(choose.equals("Overall")){
+        else if(ser.equals("Recharge")){
+            if(k.equals("Overall")){
                 s=new MobileRechargeService() {
                     @Override
-                    public int serve() {
+                    public int serve(int amount,String place) {
                         return 1;
                     }
                 };
 
-                s.SetDiscount(new OverallDiscount());
-                notifyObserver(choose+" Discount for Mobile Rcharge");
+                s.SetDiscount(new OverallDiscount(),am);
+                notifyObserver(k+" Discount for Mobile Rcharge");
+                return "Add Discount Successfully";
             }
-            else if(choose.equals("Specific")){
-                System.out.println("What Provider you need We Vodafone Etisalat Orange");
-                choose=Myobj.next();
-                if(choose.equals("We")){
+            else if(k.equals("Specific")){
+                if(pro.equals("We")){
                     sp=new WE();
                     s= sp.createRecharge();
-                    s.SetDiscount(new SpecificDiscount());
-                    notifyObserver(choose+" Discount for Mobile Rcharge We");
+                    s.SetDiscount(new SpecificDiscount(),am);
+                    notifyObserver(k+" Discount for Mobile Rcharge We");
+                    return "Add Discount Successfully";
                 }
-                if(choose.equals("Vodafone")){
+                if(pro.equals("Vodafone")){
                     sp=new Vodafone();
                     s= sp.createRecharge();
-                    s.SetDiscount(new SpecificDiscount());
-                    notifyObserver(choose+" Discount for Mobile Rcharge Vodafone");
+                    s.SetDiscount(new SpecificDiscount(),am);
+                    notifyObserver(k+" Discount for Mobile Rcharge Vodafone");
+                    return "Add Discount Successfully";
                 }
-                if(choose.equals("Etisalat")){
+                if(pro.equals("Etisalat")){
                     sp=new Etisalat();
                     s= sp.createRecharge();
-                    s.SetDiscount(new SpecificDiscount());
-                    notifyObserver(choose+" Discount for Mobile Rcharge Etisalat");
+                    s.SetDiscount(new SpecificDiscount(),am);
+                    notifyObserver(k+" Discount for Mobile Rcharge Etisalat");
+                    return "Add Discount Successfully";
                 }
-                if(choose.equals("Orange")){
+                if(pro.equals("Orange")){
                     sp=new Orange();
                     s= sp.createRecharge();
-                    s.SetDiscount(new SpecificDiscount());
-                    notifyObserver(choose+" Discount for Mobile Rcharge Orange");
+                    s.SetDiscount(new SpecificDiscount(),am);
+                    notifyObserver(k+" Discount for Mobile Rcharge Orange");
+                    return "Add Discount Successfully";
                 }
             }
         }
-        else if(choose.equals("LandLine")){
-            System.out.println("What Type Discount you need Overall Specific");
-            choose=Myobj.next();
-            if(choose.equals("Overall")){
+        else if(ser.equals("LandLine")){
+            if(k.equals("Overall")){
                 s=new LandlineService() {
                     @Override
-                    public int serve() {
+                    public int serve(int amount,String place) {
                         return 1;
                     }
                 };
 
-                s.SetDiscount(new OverallDiscount());
-                notifyObserver(choose+" Discount for Landline");
+                s.SetDiscount(new OverallDiscount(),am);
+                notifyObserver(k+" Discount for Landline");
+                return "Add Discount Successfully";
             }
-            else if(choose.equals("Specific")){
-                System.out.println("What Provider you need Monthly Quarter");
-                choose=Myobj.next();
-                if(choose.equals("Monthly")){
+            else if(k.equals("Specific")){
+                if(k1.equals("Monthly")){
                     s=new MonthlyReceipt();
-                    s.SetDiscount(new SpecificDiscount());
-                    notifyObserver(choose+" Discount for Landline Monthly Receipt");
+                    s.SetDiscount(new SpecificDiscount(),am);
+                    notifyObserver(k+" Discount for Landline Monthly Receipt");
+                    return "Add Discount Successfully";
                 }
-                if(choose.equals("Quarter")){
+                if(k1.equals("Quarter")){
                     s=new QuarterReceipt();
-                    s.SetDiscount(new SpecificDiscount());
-                    notifyObserver(choose+" Discount for Landline Quarter Receipt");
+                    s.SetDiscount(new SpecificDiscount(),am);
+                    notifyObserver(k+" Discount for Landline Quarter Receipt");
+                    return "Add Discount Successfully";
                 }
             }
         }
-        else if(choose.equals("Donation")){
-            System.out.println("What Type Discount you need Overall Specific");
-            choose=Myobj.next();
-            if(choose.equals("Overall")){
+        else if(ser.equals("Donation")){
+            if(k.equals("Overall")){
                 s=new DonationService() {
                     @Override
-                    public int serve() {
+                    public int serve(int amount,String place) {
                         return 1;
                     }
                 };
 
-                s.SetDiscount(new OverallDiscount());
-                notifyObserver(choose+" Discount for Donation");
+                s.SetDiscount(new OverallDiscount(),am);
+                notifyObserver(k+" Discount for Donation");
+                return "Add Discount Successfully";
             }
-            else if(choose.equals("Specific")){
-                System.out.println("What Provider you need Hospital NGOS School");
-                choose=Myobj.next();
-                if(choose.equals("Hospital")){
+            else if(k.equals("Specific")){
+                if(k1.equals("Hospital")){
                     s=new CancerHospital();
-                    s.SetDiscount(new SpecificDiscount());
-                    notifyObserver(choose+" Discount for Donation for Cancer Hospitals");
+                    s.SetDiscount(new SpecificDiscount(),am);
+                    notifyObserver(k+" Discount for Donation for Cancer Hospitals");
+                    return "Add Discount Successfully";
                 }
-                if(choose.equals("NGOS")){
+                if(k1.equals("NGOS")){
                     s=new NGOS();
-                    s.SetDiscount(new SpecificDiscount());
-                    notifyObserver(choose+" Discount for Donation for NGOS");
+                    s.SetDiscount(new SpecificDiscount(),am);
+                    notifyObserver(k+" Discount for Donation for NGOS");
+                    return "Add Discount Successfully";
                 }
-                if(choose.equals("School")){
+                if(k1.equals("School")){
                     s=new Schools();
-                    s.SetDiscount(new SpecificDiscount());
-                    notifyObserver(choose+" Discount for Donation for Schools");
+                    s.SetDiscount(new SpecificDiscount(),am);
+                    notifyObserver(k+" Discount for Donation for Schools");
+                    return "Add Discount Successfully";
                 }
             }
         }
+        return null;
     }
 
+    @PostMapping(value = "/registerObserver")
     @Override
-    public void registerObserver(Notifications n) {
+    public void registerObserver(@RequestBody Notifications n) {
         Observers.add(n);
     }
 
 
+    @PostMapping(value = "/removeObserver")
     @Override
-    public void removeObserver(Notifications n) {
+    public void removeObserver(@RequestBody Notifications n) {
         Observers.remove(n);
     }
 

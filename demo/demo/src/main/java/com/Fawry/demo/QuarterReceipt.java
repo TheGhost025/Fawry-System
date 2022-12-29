@@ -1,15 +1,14 @@
 package com.Fawry.demo;
 
+import org.springframework.stereotype.Service;
+
 import java.util.Scanner;
 
+@Service
 public class QuarterReceipt extends LandlineService {
 
     @Override
-    public int serve() {
-        Scanner myObj=new Scanner(System.in);
-        System.out.println("Pay Landline Quarter");
-        int amount =myObj.nextInt();
-        System.out.println("Monthly Receipt Landline Service Compelte");
+    public int serve(int amount,String place) {
         return amount;
     }
 

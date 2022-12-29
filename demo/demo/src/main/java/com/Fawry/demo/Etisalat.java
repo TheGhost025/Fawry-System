@@ -2,6 +2,7 @@ package com.Fawry.demo;
 
 import java.util.ServiceConfigurationError;
 
+@org.springframework.stereotype.Service
 public class Etisalat implements ServiceProvider{
 
     @Override

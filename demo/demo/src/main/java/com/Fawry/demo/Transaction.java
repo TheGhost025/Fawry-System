@@ -1,5 +1,6 @@
 package com.Fawry.demo;
 
+
 public class Transaction {
     String serviceProvider;
     String transactionType;
@@ -18,6 +19,12 @@ public class Transaction {
     }
     public int getAmount(){
         return amount;
+    }
+    public String getServiceProvider(){
+        return serviceProvider;
+    }
+    public String getTransactionType(){
+        return transactionType;
     }
     public void Setstate(boolean s){
         state=s;

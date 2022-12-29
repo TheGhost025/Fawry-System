@@ -1,8 +1,11 @@
 package com.Fawry.demo;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class CreditCard implements PaymentMethod{
     @Override
-    public void pay() {
-        System.out.println("Pay with Credit Card");
+    public String pay() {
+        return "Pay with Credit Card";
     }
 }
