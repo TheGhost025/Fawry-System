@@ -1,7 +1,7 @@
 package com.Fawry.demo;
 
 public class SignIn implements Aurthorize{
-    User u=new User();
+    UserAccount u=new UserAccount();
     public boolean signIn(String Email,String Password,String e,String p) {
         if (Email == e) {
             if (Password == p) {

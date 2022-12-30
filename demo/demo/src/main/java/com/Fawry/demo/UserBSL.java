@@ -1,68 +1,35 @@
 package com.Fawry.demo;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 @RestController
-public class User implements Notifications{
-    private String Name;
-    private String Email;
-    private String Password;
-
+public class UserBSL{
+    List<UserAccount> accounts=new ArrayList<UserAccount>();
     Service service;
     PaymentMethod paymentMethod;
     Transactions trans=new Transactions();
     Aurthorize aur;
     Refund refund=new Refund();
 
-    void Set(String n ,String e, String p){
-        Name =n;
-        Email=e;
-        Password=p;
-
-    }
-
-    void Get(String n ,String e,String p){
-        Name =n;
-        Email=e;
-        Password=p;
-
-    }
-
-    public void Authorize(){
-        System.out.println("Want to Signin Signup");
-        Scanner myObj=new Scanner(System.in);
-        String a=myObj.next();
-        if(a.equals("Signin")){
-            aur=new SignIn();
-            while(true){
-                System.out.println("Enter your email");
-                String e=myObj.next();
-                System.out.println("Enter your Password");
-                String p=myObj.next();
-                if(aur.signIn(Email,Password,e,p)){
-                    break;
-                };
+    @PostMapping(value = "/UserAuthorize/{type}")
+    public String Authorize(@RequestBody UserAccount a,@PathVariable("type") String type){
+        if(type.equals("Signin")){
+            if(accounts.contains(a)){
+                return "SignIn compelte successfully";
+            }
+            else{
+                return "SignIn failed";
             }
         }
-        else if(a.equals("Signup")){
-            aur=new SignUp();
-            while(true){
-                System.out.println("Enter your email");
-                String e=myObj.next();
-                System.out.println("Enter your Password");
-                String p=myObj.next();
-                if(aur.signUp()){
-                    break;
-                }
-            }
+        else if(type.equals("Signup")){
+            accounts.add(a);
+            return "SignUp compelte sucessfully";
         }
+        return null;
     }
 
     @GetMapping(value = "/searchService/{s}")
@@ -370,10 +337,5 @@ public class User implements Notifications{
             }
         }
         return null;
-    }
-
-    @Override
-    public String update(String s) {
-        return "New Update "+s;
     }
 }
