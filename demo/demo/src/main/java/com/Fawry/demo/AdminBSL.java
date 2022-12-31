@@ -17,8 +17,9 @@ public class AdminBSL{
     Transactions transactions=new Transactions();
     Refund refunds=new Refund();
 
-    public  void setRefund(Refund r){
+    public AdminBSL(Transactions t,Refund r){
         refunds=r;
+        transactions=t;
     }
 
     @PostMapping(value = "/AdminAuthorize/{type}")

@@ -15,6 +15,11 @@ public class UserBSL{
     Aurthorize aur;
     Refund refund=new Refund();
 
+    public UserBSL(Transactions t,Refund r){
+        refund=r;
+        trans=t;
+    }
+
     @PostMapping(value = "/UserAuthorize/{type}")
     public String Authorize(@RequestBody UserAccount a,@PathVariable("type") String type){
         if(type.equals("Signin")){
